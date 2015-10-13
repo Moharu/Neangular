@@ -1,5 +1,9 @@
+<button class="btn btn-primary" ng-click="step()">STEP</button>
+<button class="btn btn-danger" ng-click="run()">RUN</button>
 <p>N: {{neanderState.N}} | Z: {{neanderState.Z}}</p>
 <p>AC: {{neanderState.AC}} | PC: {{neanderState.PC}}</p>
 <p>Acessos: {{neanderState.access}} | instructions: {{neanderState.instructions}}</p>
 <p>Mem: </p>
-<p ng-repeat="x in neanderState.memory">oi</p>
+<div class="overflow: scroll" height="150px">
+<div ng-repeat="x in neanderState.memory track by $index">{{$index}} : <input type="number" ng-model="neanderState.memory[$index]"/></div>
+</div>

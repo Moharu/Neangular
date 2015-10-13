@@ -1,20 +1,5 @@
 'use strict';
 
-describe('Neangular.neander module', function() {
-
-  beforeEach(module('Neangular.neander'));
-
-  describe('view1 controller', function(){
-
-    it('should ....', inject(function($controller) {
-      //spec body
-      var view1Ctrl = $controller('NeanderCtrl');
-      expect(view1Ctrl).toBeDefined();
-    }));
-
-  });
-});
-
 describe('Neander functions', function() {
     describe('NOP', function(){
         it('should increment access, instructions and PC', function(){

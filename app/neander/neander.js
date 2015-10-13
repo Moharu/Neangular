@@ -13,17 +13,65 @@ angular.module('Neangular.neander', ['ngRoute'])
     $scope.neanderState = {
         memory: Array(256),
         N: false,
-        Z: false,
+        Z: true,
         AC: 0,
         PC: 0,
         access: 0,
         instructions: 0
     };
     $scope.neanderState.memory = $scope.neanderState.memory.join('0').split('').map(parseFloat);
+    $scope.step = function(){
+        $scope.neanderState = step($scope.neanderState);
+    }
+    $scope.run = function(){
+        $scope.neanderState = run($scope.neanderState);
+    }
 }]);
 
-function step(state){
+function run(state){
+    if(state.PC > 255){
+        return state;
+    }
+    if(state.memory[state.PC] >= 240){
+        return step(state);
+    }
+    state = step(state);
+    return run(state);
+}
 
+function step(state){
+    var nextInstruction = state.memory[state.PC];
+    if(nextInstruction < 16){
+        return NOP(state);
+    }
+    if(nextInstruction < 32){
+        return STA(state.memory[state.PC+1], state);
+    }
+    if(nextInstruction < 48){
+        return LDA(state.memory[state.PC+1], state);
+    }
+    if(nextInstruction < 64){
+        return ADD(state.memory[state.PC+1], state);
+    }
+    if(nextInstruction < 80){
+        return OR(state.memory[state.PC+1], state);
+    }
+    if(nextInstruction < 96){
+        return AND(state.memory[state.PC+1], state);
+    }
+    if(nextInstruction < 128){
+        return NOT(state);
+    }
+    if(nextInstruction < 144){
+        return JMP(state.memory[state.PC+1], state);
+    }
+    if(nextInstruction < 160){
+        return JN(state.memory[state.PC+1], state);
+    }
+    if(nextInstruction < 176){
+        return JN(state.memory[state.PC+1], state);
+    }
+    return NOP(state);
 }
 
 function NOP(state){
