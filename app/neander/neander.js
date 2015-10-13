@@ -36,6 +36,39 @@ function LDA(address, state){
     return _updateStatus(state);
 }
 
+function ADD(address, state){
+    state.AC = (state.memory[address] + state.AC) % 256;
+    state.access += 3;
+    state.instructions += 1;
+    state.PC += 2;
+    return _updateStatus(state);
+}
+
+function OR(address, state){
+    state.AC = state.memory[address] | state.AC;
+    state.access += 3;
+    state.instructions += 1;
+    state.PC += 2;
+    return _updateStatus(state);
+}
+
+function AND(address, state){
+    state.AC = state.memory[address] & state.AC;
+    state.access += 3;
+    state.instructions += 1;
+    state.PC += 2;
+    return _updateStatus(state);
+}
+
+function NOT(state){
+    var aux = ~(-1 & 255); // necessary for 8-bit operation
+    state.AC = ~(state.AC | aux);
+    state.access += 1;
+    state.instructions += 1;
+    state.PC += 1;
+    return _updateStatus(state);
+}
+
 function _updateStatus(state){
     if(state.AC === 0){
         state.Z = true;
