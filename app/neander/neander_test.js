@@ -76,7 +76,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 55;
             var afterLDAState = JSON.parse(JSON.stringify(initialState));
@@ -96,7 +96,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 0;
             var afterLDAState = JSON.parse(JSON.stringify(initialState));
@@ -117,7 +117,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 200;
             var afterLDAState = JSON.parse(JSON.stringify(initialState));
@@ -140,7 +140,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 55;
             var afterADDState = JSON.parse(JSON.stringify(initialState));
@@ -160,7 +160,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 255;
             var afterADDState = JSON.parse(JSON.stringify(initialState));
@@ -181,7 +181,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 50;
             var afterADDState = JSON.parse(JSON.stringify(initialState));
@@ -204,7 +204,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 0b11110000;
             var afterORState = JSON.parse(JSON.stringify(initialState));
@@ -224,7 +224,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 0;
             var afterORState = JSON.parse(JSON.stringify(initialState));
@@ -245,7 +245,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 0b00000100;
             var afterORState = JSON.parse(JSON.stringify(initialState));
@@ -268,7 +268,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 0b00001111;
             var afterANDState = JSON.parse(JSON.stringify(initialState));
@@ -288,7 +288,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 0;
             var afterANDState = JSON.parse(JSON.stringify(initialState));
@@ -309,7 +309,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var address = 128;
             initialState.memory[address] = 0b11111111;
             var afterANDState = JSON.parse(JSON.stringify(initialState));
@@ -332,7 +332,7 @@ describe('Neander functions', function() {
                 access: 0,
                 instructions: 0
             };
-            initialState.memory = initialState.memory.join('0').split('').map(parseFloat)
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
             var afterNOTState = JSON.parse(JSON.stringify(initialState));
             afterNOTState.AC = 0b11111111;
             afterNOTState.N = true;
@@ -340,6 +340,140 @@ describe('Neander functions', function() {
             afterNOTState.access = 1;
             afterNOTState.instructions = 1;
             expect(NOT(initialState)).toEqual(afterNOTState);
+        });
+        it('should update Z when the result is 0', function(){
+            var initialState = {
+                memory: Array(256),
+                N: false,
+                Z: false,
+                AC: 255,
+                PC: 0,
+                access: 0,
+                instructions: 0
+            };
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
+            var afterNOTState = JSON.parse(JSON.stringify(initialState));
+            afterNOTState.AC = 0;
+            afterNOTState.Z = true;
+            afterNOTState.PC = 1;
+            afterNOTState.access = 1;
+            afterNOTState.instructions = 1;
+            expect(NOT(initialState)).toEqual(afterNOTState);
+        });
+        it('should update N when the result is over 127', function(){
+            var initialState = {
+                memory: Array(256),
+                N: false,
+                Z: false,
+                AC: 0b00001111,
+                PC: 0,
+                access: 0,
+                instructions: 0
+            };
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
+            var afterNOTState = JSON.parse(JSON.stringify(initialState));
+            afterNOTState.AC = 0b11110000;
+            afterNOTState.N = true;
+            afterNOTState.PC = 1;
+            afterNOTState.access = 1;
+            afterNOTState.instructions = 1;
+            expect(NOT(initialState)).toEqual(afterNOTState);
+        });
+    });
+    describe('JMP', function(){
+        it('should set the PC to the specified address', function(){
+            var initialState = {
+                memory: Array(256),
+                N: false,
+                Z: false,
+                AC: 1,
+                PC: 0,
+                access: 0,
+                instructions: 0
+            };
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
+            var address = 128;
+            var afterJMPState = JSON.parse(JSON.stringify(initialState));
+            afterJMPState.PC = 128;
+            afterJMPState.access = 2;
+            afterJMPState.instructions = 1;
+            expect(JMP(address, initialState)).toEqual(afterJMPState);
+        });
+    });
+    describe('JN', function(){
+        it('should set the PC to the specified address if AC is >= 128', function(){
+            var initialState = {
+                memory: Array(256),
+                N: false,
+                Z: false,
+                AC: 128,
+                PC: 0,
+                access: 0,
+                instructions: 0
+            };
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
+            var address = 128;
+            var afterJNState = JSON.parse(JSON.stringify(initialState));
+            afterJNState.PC = 128;
+            afterJNState.access = 2;
+            afterJNState.instructions = 1;
+            expect(JN(address, initialState)).toEqual(afterJNState);
+        });
+        it('should proceed normally if AC is < 128', function(){
+            var initialState = {
+                memory: Array(256),
+                N: false,
+                Z: false,
+                AC: 100,
+                PC: 0,
+                access: 0,
+                instructions: 0
+            };
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
+            var address = 128;
+            var afterJNState = JSON.parse(JSON.stringify(initialState));
+            afterJNState.PC = 2;
+            afterJNState.access = 2;
+            afterJNState.instructions = 1;
+            expect(JN(address, initialState)).toEqual(afterJNState);
+        });
+    });
+    describe('JZ', function(){
+        it('should set the PC to the specified address if AC is 0', function(){
+            var initialState = {
+                memory: Array(256),
+                N: false,
+                Z: false,
+                AC: 0,
+                PC: 0,
+                access: 0,
+                instructions: 0
+            };
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
+            var address = 128;
+            var afterJZState = JSON.parse(JSON.stringify(initialState));
+            afterJZState.PC = 128;
+            afterJZState.access = 2;
+            afterJZState.instructions = 1;
+            expect(JZ(address, initialState)).toEqual(afterJZState);
+        });
+        it('should proceed normally if AC is not 0', function(){
+            var initialState = {
+                memory: Array(256),
+                N: false,
+                Z: false,
+                AC: 100,
+                PC: 0,
+                access: 0,
+                instructions: 0
+            };
+            initialState.memory = initialState.memory.join('0').split('').map(parseFloat);
+            var address = 128;
+            var afterJZState = JSON.parse(JSON.stringify(initialState));
+            afterJZState.PC = 2;
+            afterJZState.access = 2;
+            afterJZState.instructions = 1;
+            expect(JZ(address, initialState)).toEqual(afterJZState);
         });
     });
 });
