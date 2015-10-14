@@ -9,6 +9,20 @@ angular.module('Neangular.neander', ['ngRoute'])
   });
 }])
 
+.directive('afterRender', ['$timeout', function ($timeout) {
+    var def = {
+        restrict: 'A',
+        terminal: true,
+        transclude: false,
+        link: function (scope, element, attrs) {
+            $timeout(function(){
+               document.getElementById('table-body').scrollTop = 4733;
+            }, 0);
+        }
+    };
+    return def;
+}])
+
 .controller('NeanderCtrl', ['$scope', function($scope) {
     $scope.neanderState = {
         memory: Array(256),

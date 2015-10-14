@@ -1,9 +1,92 @@
+<div class="row">
+        <div class="col-md-6 col-md-push-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Panel title
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    Panel content
+                </div>
+                <div class="panel-footer">
+                    test
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-pull-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Programa
+                    </h3>
+                </div>
+                <!-- PROGRAMA INICIO -->
+
+        <table class="table table-fixed text-right">
+          <thead>
+            <tr>
+              <th class="col-xs-3">End</th><th class="col-xs-3">Dado</th><th class="col-xs-6">Mnemônico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="h3" ng-repeat="x in neanderState.memory track by $index">
+              <td class="col-xs-3">{{$index}}</td>
+              <td class="col-xs-3">
+                  <div ng-click="editProgram = !editProgram">
+                      <span ng-if="!editProgram">
+                        {{neanderState.memory[$index]}}
+                      </span>
+                  </div>
+                  <form ng-submit="editProgram = !editProgram">
+                    <input ng-blur="editProgram = !editProgram" ng-if="editProgram" ng-model="neanderState.memory[$index]" class="form-control input-sm" type="number" autofocus/>
+                  </form>
+              </td>
+              <td class="col-xs-6 text-left">NYI</td>
+            </tr>
+          </tbody>
+        </table>
+
+                <!-- PROGRAMA FIM -->
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Dados
+                    </h3>
+                </div>                
+                <!-- DADOS INICIO -->
+
+        <table class="table table-fixed text-right">
+          <thead>
+            <tr>
+              <th class="col-xs-6">End</th><th class="col-xs-6">Dado</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <tr ng-repeat="x in neanderState.memory track by $index" id="data-{{$index}}">
+              <td class="col-xs-6">{{$index}}</td><td class="col-xs-6">{{neanderState.memory[$index]}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div after-render></div>
+                <!-- DADOS FIM -->
+            </div>
+        </div>
+    </div>
+
+<!-- 
+
 <button class="btn btn-primary" ng-click="step()">STEP</button>
 <button class="btn btn-danger" ng-click="run()">RUN</button>
 <p>N: {{neanderState.N}} | Z: {{neanderState.Z}}</p>
 <p>AC: {{neanderState.AC}} | PC: {{neanderState.PC}}</p>
 <p>Acessos: {{neanderState.access}} | instructions: {{neanderState.instructions}}</p>
 <p>Mem: </p>
-<div class="overflow: scroll" height="150px">
+<div>
 <div ng-repeat="x in neanderState.memory track by $index">{{$index}} : <input type="number" ng-model="neanderState.memory[$index]"/></div>
 </div>
+
+-->
