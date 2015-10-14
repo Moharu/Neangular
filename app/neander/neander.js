@@ -16,7 +16,7 @@ angular.module('Neangular.neander', ['ngRoute'])
         transclude: false,
         link: function (scope, element, attrs) {
             $timeout(function(){
-               document.getElementById('table-body').scrollTop = 4733;
+               document.getElementById('table-body').scrollTop = 6015;
             }, 0);
         }
     };
@@ -33,7 +33,7 @@ angular.module('Neangular.neander', ['ngRoute'])
         access: 0,
         instructions: 0
     };
-    $scope.neanderState.memory = $scope.neanderState.memory.join('0').split('').map(parseFloat);
+    $scope.neanderState.memory = $scope.neanderState.memory.fill(0);
     $scope.step = function(){
         $scope.neanderState = step($scope.neanderState);
     }
@@ -43,7 +43,7 @@ angular.module('Neangular.neander', ['ngRoute'])
 }]);
 
 function run(state){
-    if(state.PC > 255){
+    if(state.PC >= 255){
         return state;
     }
     if(state.memory[state.PC] >= 240){
