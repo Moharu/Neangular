@@ -34,12 +34,24 @@ angular.module('Neangular.neander', ['ngRoute'])
         instructions: 0
     };
     $scope.neanderState.memory = $scope.neanderState.memory.fill(0);
+    $scope.refresh = function(){
+        $scope.neanderState = _updateStatus($scope.neanderState);
+        $scope.neanderMnemonics = getMnemonics($scope.neanderState.memory);
+    }
     $scope.step = function(){
         $scope.neanderState = step($scope.neanderState);
     }
     $scope.run = function(){
         $scope.neanderState = run($scope.neanderState);
     }
+    $scope.clearData = function(){
+        $scope.neanderState.AC = 0;
+        $scope.neanderState.PC = 0;
+        $scope.neanderState.access = 0;
+        $scope.neanderState.instructions = 0;
+        $scope.refresh();
+    }
+    $scope.refresh();
 }]);
 
 function run(state){
@@ -53,37 +65,90 @@ function run(state){
     return run(state);
 }
 
+function getMnemonics(memory){
+    var mnemonics = Array(memory.length).fill('');
+    for(var i=0; i<256; i++){
+        if(memory[i] < 16){
+            mnemonics[i] = 'NOP';
+        }
+        else if(memory[i] < 32){
+            mnemonics[i] = 'STA ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+        else if(memory[i] < 48){
+            mnemonics[i] = 'LDA ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+        else if(memory[i] < 64){
+            mnemonics[i] = 'ADD ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+        else if(memory[i] < 80){
+            mnemonics[i] = 'OR ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+        else if(memory[i] < 96){
+            mnemonics[i] = 'AND ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+        else if(memory[i] < 128){
+            mnemonics[i] = 'NOT';
+        }
+        else if(memory[i] < 144){
+            mnemonics[i] = 'JMP ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+        else if(memory[i] < 160){
+            mnemonics[i] = 'JN ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+        else if(memory[i] < 176){
+            mnemonics[i] = 'JZ ' + memory[i+1];
+            mnemonics[i+1] = '-';
+            i += 1;
+        }
+    }
+    return mnemonics;
+}
+
 function step(state){
     var nextInstruction = state.memory[state.PC];
     if(nextInstruction < 16){
         return NOP(state);
     }
-    if(nextInstruction < 32){
+    else if(nextInstruction < 32){
         return STA(state.memory[state.PC+1], state);
     }
-    if(nextInstruction < 48){
+    else if(nextInstruction < 48){
         return LDA(state.memory[state.PC+1], state);
     }
-    if(nextInstruction < 64){
+    else if(nextInstruction < 64){
         return ADD(state.memory[state.PC+1], state);
     }
-    if(nextInstruction < 80){
+    else if(nextInstruction < 80){
         return OR(state.memory[state.PC+1], state);
     }
-    if(nextInstruction < 96){
+    else if(nextInstruction < 96){
         return AND(state.memory[state.PC+1], state);
     }
-    if(nextInstruction < 128){
+    else if(nextInstruction < 128){
         return NOT(state);
     }
-    if(nextInstruction < 144){
+    else if(nextInstruction < 144){
         return JMP(state.memory[state.PC+1], state);
     }
-    if(nextInstruction < 160){
+    else if(nextInstruction < 160){
         return JN(state.memory[state.PC+1], state);
     }
-    if(nextInstruction < 176){
-        return JN(state.memory[state.PC+1], state);
+    else if(nextInstruction < 176){
+        return JZ(state.memory[state.PC+1], state);
     }
     return NOP(state);
 }

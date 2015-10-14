@@ -10,11 +10,21 @@
                 <div class="form-inline">
                     <div class="form-group">
                         <label>AC</label>
-                        <input class="form-control text-center" type="number" onFocus="this.select();" max="255" min="0" ng-model="neanderState.AC">
+                        <input ng-change="refresh()" class="form-control text-center" type="number" onFocus="this.select();" max="255" min="0" ng-model="neanderState.AC">
                     </div>
                     <div class="form-group">
                         <label>PC</label>
-                        <input class="form-control text-center" type="number" onFocus="this.select();" max="255" min="0" ng-model="neanderState.PC">
+                        <input ng-change="refresh()" class="form-control text-center" type="number" onFocus="this.select();" max="255" min="0" ng-model="neanderState.PC">
+                    </div>
+                </div>
+                <div class="form-inline" style="margin-top: 10px">
+                    <div class="form-group">
+                        <label>Acessos</label>
+                        <input class="form-control text-center" disabled type="number" max="255" min="0" onFocus="this.select();" ng-model="neanderState.access">
+                    </div>
+                    <div class="form-group">
+                        <label>Instruções</label>
+                        <input class="form-control text-center" disabled type="number" max="255" min="0" onFocus="this.select();" ng-model="neanderState.instructions">
                     </div>
                 </div>
                 <div class="form-inline">
@@ -26,8 +36,6 @@
                         'glyphicon-remove-sign':(!neanderState.N),
                         'text-danger':(!neanderState.N)}" 
                         aria-hidden="true"></span>
-                    </div>
-                    <div class="form-group h3">
                         <label>Z</label>
                         <span class="glyphicon" 
                         ng-class="{'glyphicon-ok-sign':(neanderState.Z), 
@@ -37,21 +45,35 @@
                         aria-hidden="true"></span>
                     </div>
                 </div>
-                <div class="form-inline">
-                    <div class="form-group">
-                        <label>Acessos</label>
-                        <input class="form-control text-center" type="number" onFocus="this.select();" ng-model="neanderState.access">
-                    </div>
-                    <div class="form-group">
-                        <label>Instruções</label>
-                        <input class="form-control text-center" type="number" onFocus="this.select();" ng-model="neanderState.instructions">
-                    </div>
-                </div>
+                <div style="margin-top: 5px">
                     <button class="btn btn-primary" ng-click="step()">STEP</button>
                     <button class="btn btn-danger" ng-click="run()">RUN</button>
+                    <button class="btn btn-default" ng-click="clearData()">CLEAR</button>
+                </div>
                 </div>
                 <div class="panel-footer">
-                    test
+                <table class="table">
+                    <tr>
+                        <td>NOP 00  </td>
+                        <td>ADD 48  end</td>
+                        <td>JMP 128 end</td>
+                    </tr>
+                    <tr>
+                        <td>STA 16  end</td>
+                        <td>OR  64  end</td>
+                        <td>JN  144 end</td>
+                    </tr>
+                    <tr>
+                        <td>LDA 32  end</td>
+                        <td>AND 80  end</td>
+                        <td>JZ  160 end</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>NOT 96  </td>
+                        <td>HLT 240 </td>
+                    </tr>
+                </table>
                 </div>
             </div>
         </div>
@@ -72,13 +94,13 @@
           </thead>
           <tbody>
             <tr class="h3" ng-repeat="x in neanderState.memory track by $index" ng-class="{'success':($index == neanderState.PC)}">
-              <td class="col-xs-3">{{$index}}</td>
+              <td ng-click="neanderState.PC = $index" class="col-xs-3">{{$index}}</td>
               <td class="col-xs-3">
                   <div class="form-inline">
-                    <input onFocus="this.select();" max="255" min="0"ng-model="neanderState.memory[$index]" class="form-control text-right input-sm" type="number"/>
+                    <input ng-change="refresh()" max="255" min="0"ng-model="neanderState.memory[$index]" class="form-control text-right input-sm" type="number"/>
                   </div>
               </td>
-              <td class="col-xs-6 text-center">NYI</td>
+              <td class="col-xs-6 text-center">{{neanderMnemonics[$index]}}</td>
             </tr>
           </tbody>
         </table>
@@ -105,7 +127,7 @@
             <tr ng-repeat="x in neanderState.memory track by $index" id="data-{{$index}}">
               <td class="col-xs-6">{{$index}}</td>
               <td class="col-xs-6">
-                <input onFocus="this.select();" max="255" min="0" ng-model="neanderState.memory[$index]" class="form-control text-right input-sm" type="number"/>
+                <input ng-change="refresh()" max="255" min="0" ng-model="neanderState.memory[$index]" class="form-control text-right input-sm" type="number"/>
               </td>
             </tr>
           </tbody>
