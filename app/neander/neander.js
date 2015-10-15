@@ -114,6 +114,12 @@ function getMnemonics(memory){
             mnemonics[i+1] = '-';
             i += 1;
         }
+	else if(memory[i] >= 240){
+	    mnemonics[i] = 'HLT';
+	}
+	else {
+	    mnemonics[i] = '-';
+	}
     }
     return mnemonics;
 }
